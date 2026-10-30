@@ -1,0 +1,20 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+    upAxis = "Y"
+    subLayers = [
+        @./ground.usda@
+    ]
+)
+
+over "World"
+{
+    def Xform "ShelfA" (
+        prepend references = @./shelf.usda@
+    )
+    {
+        double3 xformOp:translate = (0, 1, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+}

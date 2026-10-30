@@ -1,0 +1,16 @@
+#usda 1.0
+(
+    defaultPrim = "Shelf"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Shelf"
+{
+    def Cube "Body"
+    {
+        double size = 1
+        double3 xformOp:scale = (1, 2, 0.4)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+    }
+}
