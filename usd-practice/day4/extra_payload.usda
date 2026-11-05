@@ -1,0 +1,9 @@
+#usda 1.0
+(
+    defaultPrim = "Extra"
+)
+
+def Xform "Extra"
+{
+    custom string note = "I came from a payload"
+}

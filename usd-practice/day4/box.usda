@@ -1,0 +1,16 @@
+#usda 1.0
+(
+    defaultPrim = "Box"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Box"
+{
+    custom string color = "gray"
+
+    def Cube "Geo"
+    {
+        double size = 1
+    }
+}

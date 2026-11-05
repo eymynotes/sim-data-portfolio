@@ -1,0 +1,80 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    metersPerUnit = 1
+    upAxis = "Y"
+    # Stacks layer_low.usda underneath this file. Anything in scene.usda is stronger. Thats the Local part of LIVRPS.
+    subLayers = [
+        @./layer_low.usda@
+    ]
+)
+
+############################
+# class means a template, not a real object. 
+# Other prims point at it to borrow its values. 
+# The underscore name is just a convention for not a real thing. 
+# They sit at the root (/_class_Shelf), outside World, 
+# because the inherits and specializes arcs point at them by absolute path.
+class "_class_Shelf"
+{
+    custom string color = "blue"
+}
+
+class "_class_Base"
+{
+    custom string color = "green"
+}
+############################
+# /World container
+
+def Xform "World"
+{
+    # FromSublayer was created in layer_low.usda with color = orange.
+    # over means edit a prim that exists elsewhere. 
+    # This file sets color = "purple", and since this layer is stronger, purple wins.
+    over "FromSublayer"
+    {
+        custom string color = "purple"
+    }
+
+
+    def Xform "LocalWins" (
+        # pulls in the box, which says color = gray
+        prepend references = @./box.usda@
+    )
+    {
+        # A value written on the prim itself is Local >>> RED win
+        custom string color = "red"
+    }
+
+    def Xform "InheritBeatsRef" (
+        prepend inherits = </_class_Shelf>
+        prepend references = @./box.usda@
+    )
+    {
+    }
+
+    def Xform "RefBeatsSpecialize" (
+        prepend specializes = </_class_Base>
+        prepend references = @./box.usda@
+    )
+    {
+    }
+
+    def Xform "PayloadDemo" (
+        prepend payload = @./extra_payload.usda@
+    )
+    {
+    }
+}
+
+# prepend adds the arc at the front of the list, giving it priority over any other arcs of the same kind.
+# < > (like </_class_Shelf>) is a prim path inside the scene, while @ @ (like @./box.usda@) is a file path.
+# def creates a prim, over edits one that exists elsewhere, and class makes a template.
+
+# prepend only works on list-editable arcs: references, payload, inherits, specializes, and apiSchemas. 
+# subLayers is a plain list, so you write it out in full:
+    # subLayers = [
+    #     @./layer_a.usda@,
+    #     @./layer_b.usda@ ]
+# In that list, the first entry is the strongest. Here layer_a.usda wins over layer_b.usda on any conflict.

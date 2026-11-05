@@ -1,4 +1,4 @@
-# Day 1
+# Day 2
 - Did: Create USDA files and assembled it to a scene
 - Broke:
 

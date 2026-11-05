@@ -38,7 +38,9 @@ for prim in stage.Traverse():
     depth = prim.GetPath().pathElementCount - 1
     print(" " * depth + prim.GetName(), prim.GetTypeName())
 
-##### "Traverse()" : walks every prim on the stage. The indentation shows the hierarchy
+##### "Traverse()" : walks through every prim in the scene, one by one, 
+#####                so you can inspect or change them without knowing their paths in advance.
+#####                >> Print scene hierarchy, Find prim by type/name, Bulk edit, Check scene for problem
 
 # Print Attributes (Read data back out of stage)
 for attr in stage.GetPrimAtPath("/world/Shelf_0").GetAttributes():
