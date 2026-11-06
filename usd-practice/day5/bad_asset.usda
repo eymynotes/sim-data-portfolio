@@ -1,0 +1,5 @@
+# Test bad asset
+
+def Xform "my_shelf"
+{
+}

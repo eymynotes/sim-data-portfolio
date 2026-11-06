@@ -1,0 +1,89 @@
+#usda 1.0
+(
+    defaultPrim = "Shelf"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Shelf" (
+    variants = {
+        string color = "red"
+    }
+    prepend variantSets = "color"
+)
+{
+    def Cube "Body"
+    {
+        double size = 1
+        float3 xformOp:scale = (1, 2, 0.4)
+        uniform token[] xformOpOrder = ["xformOp:scale"]
+    }
+
+    def Scope "Materials"
+    {
+        def Material "Red"
+        {
+            token outputs:surface.connect = </Shelf/Materials/Red/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.8, 0.1, 0.1)
+                token outputs:surface
+            }
+        }
+
+        def Material "Green"
+        {
+            token outputs:surface.connect = </Shelf/Materials/Green/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.1, 0.7, 0.2)
+                token outputs:surface
+            }
+        }
+
+        def Material "Blue"
+        {
+            token outputs:surface.connect = </Shelf/Materials/Blue/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.1, 0.2, 0.8)
+                token outputs:surface
+            }
+        }
+    }
+    variantSet "color" = {
+        "blue" {
+            over "Body" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Shelf/Materials/Blue>
+            }
+
+        }
+        "green" {
+            over "Body" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Shelf/Materials/Green>
+            }
+
+        }
+        "red" {
+            over "Body" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Shelf/Materials/Red>
+            }
+
+        }
+    }
+}
