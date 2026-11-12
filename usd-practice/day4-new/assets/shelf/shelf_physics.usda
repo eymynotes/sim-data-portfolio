@@ -1,0 +1,65 @@
+#usda 1.0
+(
+    defaultPrim = "shelf"
+    framesPerSecond = 24
+    metersPerUnit = 1
+    timeCodesPerSecond = 24
+    upAxis = "Y"
+)
+
+def Xform "shelf" (
+    prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysicsMassAPI"]
+    assetInfo = {
+        asset identifier = @./shelf.usd@
+        string name = "shelf"
+        asset thumbnail = @./thumbnail.png@
+    }
+    prepend inherits = </__class__/shelf>
+    kind = "component"
+    prepend payload = @./payload.usdnc@
+    prepend variantSets = "size"
+)
+{
+    float physics:mass = 25
+
+    over "geo"
+    {
+        over "shape" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            uniform token physics:approximation = "convexHull"
+        }
+    }
+    variantSet "size" = {
+        "normal" (
+            prepend apiSchemas = ["GeomModelAPI"]
+            kind = "component"
+        ) {
+            float3[] extentsHint = [(-0.625, 0, -0.275), (0.625, 2, 0.275)]
+
+        }
+        "short" (
+            prepend apiSchemas = ["GeomModelAPI"]
+            kind = "component"
+        ) {
+            float3[] extentsHint = [(-0.3125, 0, -0.1375), (0.3125, 1, 0.1375)]
+
+        }
+        "tall" (
+            prepend apiSchemas = ["GeomModelAPI"]
+            kind = "component"
+        ) {
+            float3[] extentsHint = [(-0.9375, 0, -0.41250002), (0.9375, 3, 0.41250002)]
+
+        }
+    }
+}
+
+class "__class__"
+{
+    class "shelf"
+    {
+    }
+}
+
