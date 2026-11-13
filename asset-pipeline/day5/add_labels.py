@@ -1,5 +1,4 @@
 # Add semantic labels (manual)
-
 import sys
 from pxr import Usd, UsdSemantics
 

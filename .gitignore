@@ -3,3 +3,5 @@
 
 # keeps Python’s cache folders out.
 __pycache__/
+
+/asset-pipeline/day6/sources/
